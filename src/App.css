@@ -67,6 +67,13 @@
   color: #666;
 }
 
+.empty-message {
+  font-size: 16px;
+  color: #999;
+  text-align: center;
+  padding: 40px 20px;
+}
+
 /* Search Form */
 .search-form {
   display: flex;
@@ -160,6 +167,22 @@
 .add-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+/* Remove from Wish List Button */
+.remove-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.remove-button:hover {
+  background-color: #c0392b;
 }
 
 /* Responsive */
