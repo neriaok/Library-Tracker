@@ -76,6 +76,7 @@
 
 /* Search Form */
 .search-form {
+  position: relative;
   display: flex;
   gap: 10px;
   margin: 30px 0;
@@ -84,28 +85,111 @@
 .search-input {
   flex: 1;
   padding: 12px 16px;
+  padding-right: 40px;
   font-size: 16px;
   border: 2px solid #ddd;
   border-radius: 8px;
   outline: none;
+  transition: border-color 0.3s;
 }
 
 .search-input:focus {
   border-color: #4a90e2;
 }
 
-.search-button {
-  padding: 12px 30px;
-  background-color: #4a90e2;
-  color: white;
+.clear-button {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  font-size: 20px;
+  color: #999;
   cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.search-button:hover {
-  background-color: #357abd;
+.clear-button:hover {
+  color: #333;
+}
+
+/* Loading Spinner */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #4a90e2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-container p {
+  color: #666;
+  font-size: 16px;
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  margin: 30px 0;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  color: #856404;
+}
+
+.error-icon {
+  font-size: 24px;
+}
+
+.error-message p {
+  margin: 0;
+  color: #856404;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.empty-icon {
+  font-size: 64px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  font-size: 24px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: #999;
 }
 
 /* Books List */
@@ -123,6 +207,12 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   border: 1px solid #e0e0e0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.book-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .book-item img {
@@ -130,6 +220,28 @@
   height: 120px;
   object-fit: cover;
   border-radius: 4px;
+}
+
+.no-image {
+  width: 80px;
+  height: 120px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
+
+.no-image span {
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+
+.no-image p {
+  font-size: 12px;
+  margin: 0;
 }
 
 .book-info {
@@ -158,15 +270,18 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .add-button:hover:not(:disabled) {
   background-color: #357abd;
+  transform: translateY(-1px);
 }
 
 .add-button:disabled {
-  background-color: #ccc;
+  background-color: #28a745;
   cursor: not-allowed;
+  opacity: 0.8;
 }
 
 /* Remove from Wish List Button */
@@ -179,10 +294,12 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .remove-button:hover {
   background-color: #c0392b;
+  transform: translateY(-1px);
 }
 
 /* Responsive */
@@ -198,5 +315,15 @@
 
   .nav-btn {
     flex: 1;
+  }
+
+  .book-item {
+    flex-direction: column;
+  }
+
+  .book-item img,
+  .no-image {
+    width: 100%;
+    height: 200px;
   }
 }
