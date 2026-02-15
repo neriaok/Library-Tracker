@@ -23,7 +23,6 @@ function SearchPage() {
       }));
       
       setBooks(formattedBooks);
-      console.log('Found books:', formattedBooks);
     } catch (error) {
       console.error('Error fetching books:', error);
     } finally {
@@ -54,7 +53,22 @@ function SearchPage() {
       </form>
 
       {loading && <p>Loading...</p>}
-      {books.length > 0 && <p>Found {books.length} books!</p>}
+
+      {books.length > 0 && (
+        <div className="books-list">
+          {books.map(book => (
+            <div key={book.id} className="book-item">
+              {book.thumbnail && (
+                <img src={book.thumbnail} alt={book.title} />
+              )}
+              <div className="book-info">
+                <h3>{book.title}</h3>
+                <p>{book.authors.join(', ')}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
