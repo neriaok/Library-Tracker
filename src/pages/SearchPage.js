@@ -2,11 +2,38 @@ import React, { useState } from 'react';
 
 function SearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const searchBooks = async () => {
+    if (!searchTerm.trim()) return;
+
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&maxResults=20`
+      );
+      const data = await response.json();
+      
+      const formattedBooks = (data.items || []).map(item => ({
+        id: item.id,
+        title: item.volumeInfo.title,
+        authors: item.volumeInfo.authors || ['Unknown Author'],
+        thumbnail: item.volumeInfo.imageLinks?.thumbnail
+      }));
+      
+      setBooks(formattedBooks);
+      console.log('Found books:', formattedBooks);
+    } catch (error) {
+      console.error('Error fetching books:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Searching for:', searchTerm);
-    // API call will come in next step
+    searchBooks();
   };
 
   return (
@@ -25,6 +52,9 @@ function SearchPage() {
           Search
         </button>
       </form>
+
+      {loading && <p>Loading...</p>}
+      {books.length > 0 && <p>Found {books.length} books!</p>}
     </div>
   );
 }
