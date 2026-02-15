@@ -192,6 +192,30 @@
   color: #999;
 }
 
+/* Wish List Header */
+.wishlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.wishlist-stats {
+  display: flex;
+  gap: 10px;
+}
+
+.stat-badge {
+  padding: 8px 16px;
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 /* Books List */
 .books-list {
   display: flex;
@@ -315,6 +339,12 @@
 
   .nav-btn {
     flex: 1;
+  }
+
+  .wishlist-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
   }
 
   .book-item {
