@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useLibrary } from '../context/LibraryContext';
 
 function SearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  const { addToWishList, isInWishList } = useLibrary();
 
   const searchBooks = async () => {
     if (!searchTerm.trim()) return;
@@ -64,6 +67,13 @@ function SearchPage() {
               <div className="book-info">
                 <h3>{book.title}</h3>
                 <p>{book.authors.join(', ')}</p>
+                <button
+                  onClick={() => addToWishList(book)}
+                  disabled={isInWishList(book.id)}
+                  className="add-button"
+                >
+                  {isInWishList(book.id) ? 'Already in Wish List' : 'Add to Wish List'}
+                </button>
               </div>
             </div>
           ))}
