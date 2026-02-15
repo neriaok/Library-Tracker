@@ -14,6 +14,8 @@ function SearchPage() {
     // Don't search if search term is empty
     if (!searchTerm.trim()) {
       setBooks([]);
+      setLoading(false);  // ← הוספנו את זה!
+      setError(null);     // ← הוספנו את זה!
       return;
     }
 
