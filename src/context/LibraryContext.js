@@ -12,8 +12,9 @@ export const useLibrary = () => {
 
 export const LibraryProvider = ({ children }) => {
   const [wishList, setWishList] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load from localStorage when component mounts
+  // Load from localStorage when component mounts (ONLY ONCE)
   useEffect(() => {
     console.log('🔵 Loading from localStorage...');
     const savedWishList = localStorage.getItem('wishList');
@@ -28,13 +29,17 @@ export const LibraryProvider = ({ children }) => {
         console.error('❌ Error loading wish list from localStorage:', error);
       }
     }
+    
+    setIsLoaded(true);
   }, []);
 
-  // Save to localStorage whenever wishList changes
+  // Save to localStorage whenever wishList changes (BUT ONLY AFTER INITIAL LOAD)
   useEffect(() => {
-    console.log('💾 Saving to localStorage:', wishList);
-    localStorage.setItem('wishList', JSON.stringify(wishList));
-  }, [wishList]);
+    if (isLoaded) {
+      console.log('💾 Saving to localStorage:', wishList);
+      localStorage.setItem('wishList', JSON.stringify(wishList));
+    }
+  }, [wishList, isLoaded]);
 
   const addToWishList = (book) => {
     console.log('➕ Adding book:', book);
