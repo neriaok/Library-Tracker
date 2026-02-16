@@ -11,24 +11,19 @@ function SearchPage() {
 
   // Debounced search effect
   useEffect(() => {
-    // Don't search if search term is empty
     if (!searchTerm.trim()) {
       setBooks([]);
-      setLoading(false);  // ← הוספנו את זה!
-      setError(null);     // ← הוספנו את זה!
+      setLoading(false);
+      setError(null);
       return;
     }
 
-    // Set loading and clear previous error
-    setLoading(true);
-    setError(null);
-
-    // Debounce: wait 500ms after user stops typing
     const timer = setTimeout(() => {
+      setLoading(true);
+      setError(null);
       searchBooks();
     }, 500);
 
-    // Cleanup: cancel the timer if user types again
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
@@ -91,6 +86,7 @@ function SearchPage() {
         )}
       </div>
 
+      {/* Loading Spinner */}
       {loading && (
         <div className="loading-container">
           <div className="spinner"></div>
@@ -98,31 +94,17 @@ function SearchPage() {
         </div>
       )}
 
-      {error && (
+      {/* Error Message */}
+      {!loading && error && (
         <div className="error-message">
           <span className="error-icon">⚠️</span>
           <p>{error}</p>
         </div>
       )}
 
-      {!loading && !error && searchTerm && books.length === 0 && (
-        <div className="empty-state">
-          <span className="empty-icon">📭</span>
-          <h3>No Results Found</h3>
-          <p>Try searching with different keywords</p>
-        </div>
-      )}
-
-      {!loading && !error && !searchTerm && (
-        <div className="empty-state">
-          <span className="empty-icon">🔍</span>
-          <h3>Start Your Search</h3>
-          <p>Type a book title or author name to begin</p>
-        </div>
-      )}
-
-      {!loading && books.length > 0 && (
-        <div className="books-list">
+      {/* Books Results */}
+      {!loading && !error && books.length > 0 && (
+        <div className="books-grid">
           {books.map(book => (
             <div key={book.id} className="book-item">
               {book.thumbnail ? (
@@ -146,6 +128,19 @@ function SearchPage() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Empty State - מוצג תמיד כשאין תוצאות ואין טעינה */}
+      {!loading && !error && books.length === 0 && (
+        <div className="empty-state">
+          <span className="empty-icon">🔍</span>
+          <h3>Start Your Search</h3>
+          <p>
+            {searchTerm 
+              ? 'Searching...' 
+              : 'Type a book title or author name to begin'}
+          </p>
         </div>
       )}
     </div>
